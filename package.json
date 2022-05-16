@@ -3,6 +3,7 @@
   "version": "1.0.7",
   "description": "",
   "main": "index.js",
+  "repository": "ice-drip/lungo",
   "scripts": {
     "build": "pnpm rollup -c",
     "ipublish": "pnpm publish --no-git-checks --registry https://registry.npmjs.org/ --access public",
