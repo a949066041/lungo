@@ -1,0 +1,45 @@
+{
+  "name": "@kaffee/lungo",
+  "version": "1.0.7",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "pnpm rollup -c",
+    "ipublish": "pnpm publish --no-git-checks --registry https://registry.npmjs.org/ --access public",
+    "prepublish": "pnpm build"
+  },
+  "bin": {
+    "lungo": "./dist/bin.js"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "Rikka",
+  "license": "GPLV3",
+  "devDependencies": {
+    "@nodelib/fs.walk": "^1.2.8",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@types/adm-zip": "^0.5.0",
+    "@types/minimist": "^1.2.2",
+    "@types/node": "14.14.31",
+    "@types/ssh2": "^0.5.52",
+    "adm-zip": "^0.5.9",
+    "chalk": "^5.0.1",
+    "console-table-printer": "^2.11.0",
+    "dayjs": "^1.11.2",
+    "minimist": "^1.2.6",
+    "rollup": "^2.72.1",
+    "rollup-plugin-hashbang": "^3.0.0",
+    "rollup-plugin-typescript2": "^0.31.2",
+    "roolup": "^1.0.4",
+    "rxjs": "^7.5.5",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "ssh2": "^1.10.0"
+  }
+}
