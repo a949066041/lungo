@@ -10,8 +10,8 @@
 import { Observable } from "rxjs";
 import { Client } from "ssh2";
 
-import { Config } from "./config/config.interface";
-const ssh$ = (config: Config) =>
+import { Config, Config2 } from "./config/config.interface";
+const ssh$ = (config: Config | Config2) =>
   new Observable<Client>((observer) => {
     const conn = new Client();
     if (config.forward) {
@@ -35,13 +35,16 @@ const ssh$ = (config: Config) =>
                 .on("close", () => {
                   observer.complete();
                 })
-                .connect({
+                .connect(Object.assign({
                   sock: stream,
                   host: config.host,
                   port: config.port,
                   username: config.username,
+                }, "password" in config ? {
                   password: config.password
-                });
+                } : {
+                  privateKey: config.privateKey
+                }));
             }
           );
         })
@@ -54,12 +57,15 @@ const ssh$ = (config: Config) =>
         .on("close", () => {
           observer.complete();
         })
-        .connect({
+        .connect(Object.assign({
           host: config.host,
           port: config.port,
-          username: config.username,
+          username: config.username
+        }, "password" in config ? {
           password: config.password
-        });
+        } : {
+          privateKey: config.privateKey
+        }));
     }
   });
 const exec$ = (client: Client, command: string) =>

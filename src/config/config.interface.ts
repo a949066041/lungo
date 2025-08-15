@@ -6,17 +6,25 @@
  * @Description:
  * @FilePath: \faw-operate-plateform-workspace\apps\tools\upload\src\config\config.interface.ts
  */
-export interface Config {
+
+export interface ConfigCommon {
   serverDir: string;
   host: string;
   port: number;
   username: string;
-  password: string;
   project: string;
   dist: string;
   timeout?: number;
   forward?: Forward;
 }
+
+export interface Config extends ConfigCommon {
+  password: string;
+}
+export interface Config2 extends ConfigCommon {
+  privateKey: string
+}
+
 interface Forward {
   host: string;
   port: number;

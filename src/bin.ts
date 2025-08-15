@@ -40,13 +40,19 @@ const useConfg = config_file[env];
 
 const keyList = new Set(Object.keys(useConfg));
 
-["serverDir", "host", "port", "username", "password", "project", "dist"].some(
+["serverDir", "host", "port", "username", "project", "dist"].some(
   (item) => {
     if (!keyList.has(item)) {
       throw new Error("配置文件缺少" + item);
     }
   }
 );
+
+['privateKey', 'password'].every((item) => {
+  if (!keyList.has(item)) {
+    throw new Error("密码或私钥缺少" + item);
+  }
+})
 
 interface CommonFile {
   filename: string;

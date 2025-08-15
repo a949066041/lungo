@@ -5,6 +5,7 @@
   "main": "index.js",
   "repository": "ice-drip/lungo",
   "scripts": {
+    "dev": "pnpm rollup -c -w",
     "build": "pnpm rollup -c",
     "ipublish": "pnpm publish --no-git-checks --registry https://registry.npmjs.org/ --access public",
     "prepublish": "pnpm build"
@@ -18,12 +19,10 @@
   "author": "Rikka",
   "license": "GPLV3",
   "devDependencies": {
-    "@nodelib/fs.walk": "^2.0.0",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.7",
-    "@types/adm-zip": "^0.5.5",
     "@types/minimist": "^1.2.5",
     "@types/node": "20.14.9",
     "@types/ssh2": "^1.15.0",
@@ -40,7 +39,8 @@
     "typescript": "^5.5.2"
   },
   "dependencies": {
-    "adm-zip": "0.5.12",
-    "ssh2": "^1.15.0"
+    "@rollup/plugin-terser": "^0.4.4",
+    "ssh2": "^1.15.0",
+    "zip-a-folder": "^3.1.9"
   }
 }

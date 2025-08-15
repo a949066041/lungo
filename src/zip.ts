@@ -6,33 +6,12 @@
  * @Description:
  * @FilePath: \faw-operate-plateform-workspace\apps\tools\upload\src\zip.ts
  */
-import * as fsWalk from "@nodelib/fs.walk";
-import AdmZip from "adm-zip";
-import { relative, resolve, sep } from "path";
+import { join } from "path";
+import { zip } from 'zip-a-folder';
 
-function createZip(path: string, dist: string): AdmZip {
-  const allFile = fsWalk
-    .walkSync(resolve(path, dist))
-    .map((item) => {
-      return { ...item, relative: relative(path, item.path) };
-    })
-    .filter(
-      (item) =>
-        !item.path.includes(".bundle_info") && !item.dirent.isDirectory()
-    )
-    .map((item) => {
-      const relativePath = item.relative.split(sep).join("/").split(dist)[1];
-      const lastIndex = relativePath.lastIndexOf("/");
-      return {
-        ...item,
-        relative: relativePath.slice(0, Math.max(0, lastIndex + 1))
-      };
-    });
-  const zip = new AdmZip();
-  allFile.forEach((item) => {
-    zip.addLocalFile(item.path, item.relative);
-  });
-  return zip;
+function createZip2(path: string, dist: string, toZip: string) {
+  return zip(join(path, dist), toZip)
 }
 
-export { createZip };
+export { createZip2 };
+

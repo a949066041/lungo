@@ -11,23 +11,23 @@ import { resolve } from "path";
 import { Observable } from "rxjs";
 import { Client } from "ssh2";
 
-import { Config } from "./config/config.interface";
-import { createZip } from "./zip";
+import { Config, Config2 } from "./config/config.interface";
+import { createZip2 } from "./zip";
 
 const sftp$ = (
-  config: Config,
+  config: Config | Config2,
   conn: Client,
   projectDir: string,
   dist: string
 ) =>
   new Observable<{ command: string; del: string }>((observe) => {
-    conn.sftp((err, sftp) => {
+    conn.sftp(async (err, sftp) => {
       if (err) throw err;
       const zipFileName = `${config.project}-5p2O5qKT6JCM.zip`;
       const fullFileName = `${config.serverDir}/${zipFileName}`;
       const command = `unzip ${fullFileName} -d ${config.serverDir}/${config.project}`;
       const writeStream = sftp.createWriteStream(fullFileName);
-      const zipPath = resolve(process.cwd(), dist, "dist.zip");
+      const zipPath = resolve(process.cwd(), "dist.zip");
 
       writeStream.on("close", () => {
         observe.next({ command, del: `rm -r ${fullFileName}` });
@@ -39,7 +39,7 @@ const sftp$ = (
         observe.complete();
         rmSync(zipPath);
       });
-      createZip(projectDir, dist).writeZip(zipPath);
+      await createZip2(projectDir, dist, zipPath)
       const readStream = createReadStream(zipPath);
       readStream.pipe(writeStream);
     });

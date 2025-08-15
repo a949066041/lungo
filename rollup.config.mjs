@@ -7,7 +7,7 @@
  * @FilePath: \faw-operate-plateform-workspace\apps\tools\upload\rollup.config.js
  */
 import typescript from "rollup-plugin-typescript2";
-import hashbang from "rollup-plugin-hashbang";
+import terser from '@rollup/plugin-terser';
 import commonjs from "@rollup/plugin-commonjs";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import json from "@rollup/plugin-json";
@@ -25,6 +25,7 @@ function rollupBuildUtil() {
   };
 }
 const plugins = [
+  rollupBuildUtil(),
   nodeResolve({
     preferBuiltins: true,
     exportConditions: ["node"],
@@ -32,12 +33,12 @@ const plugins = [
     resolveOnly: (module) => !module.includes("ssh2")
   }),
   commonjs(),
-  rollupBuildUtil(),
   typescript(),
   json(),
   replace({
     "require('node:": "require('"
   }),
+  terser(),
   // hashbang.default()
 ];
 
@@ -47,7 +48,7 @@ const config = [
     output: {
       format: "cjs",
       banner: "#!/usr/bin/env node",
-      file: "./dist/bin.js"
+      file: "./dist/bin.js",
     },
     plugins
   }

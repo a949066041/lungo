@@ -1,0 +1,37 @@
+name: "ssh deploy"
+description: "ssh gz by lungo"
+author: "wangsh"
+inputs:
+  SSH_PRIVATE_KEY:
+    description: "Private key part of an SSH key pair"
+    required: true
+  REMOTE_HOST:
+    description: "Remote host"
+    required: true
+  REMOTE_USER:
+    description: "Remote user"
+    required: true
+  REMOTE_PORT:
+    description: "Remote port"
+    required: false
+    default: "22"
+  SERVER_PROJECT:
+    description: "Server project"
+    required: true
+  CLIENT_DIST:
+    description: "Client dist directory, path relative to `$GITHUB_WORKSPACE` root, eg: `dist`"
+    required: false
+    default: dist"
+  SERVER_DIR:
+    description: "Server dir"
+    required: false
+    default: ""
+outputs:
+  status:
+    description: "Status"
+runs:
+  using: "node22"
+  main: "dist/index.js"
+branding:
+  color: "green"
+  icon: "truck"
