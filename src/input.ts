@@ -43,12 +43,10 @@ const inputs: Config | Config2 = {
 };
 
 inputNames.forEach((input) => {
-  const inputVal = process.env[input]
+  const inputVal = process.env[input] || process.env[`INPUT_${input}`]
   const validVal: string = inputVal === undefined ? defaultInputs[input as keyof typeof defaultInputs] : inputVal
   // @ts-ignore
   inputs[aliasNams[input as keyof typeof defaultInputs]] = validVal;
 })
-
-console.log(process.env)
 
 export { inputs }
