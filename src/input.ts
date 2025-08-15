@@ -36,7 +36,7 @@ const inputs: Config | Config2 = {
   privateKey: '',
   host: '',
   username: '',
-  port: 22,
+  port: '22',
   project: '',
   dist: '',
   serverDir: '',

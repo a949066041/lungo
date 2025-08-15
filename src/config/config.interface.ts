@@ -10,7 +10,7 @@
 export interface ConfigCommon {
   serverDir: string;
   host: string;
-  port: number;
+  port: string;
   username: string;
   project: string;
   dist: string;

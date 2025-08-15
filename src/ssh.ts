@@ -22,7 +22,7 @@ const ssh$ = (config: Config | Config2) =>
             "127.0.0.1",
             8797,
             config.host,
-            config.port,
+            +config.port,
             (err, stream) => {
               if (err) {
                 console.log("FIRST :: exec error: " + err);
@@ -38,7 +38,7 @@ const ssh$ = (config: Config | Config2) =>
                 .connect(Object.assign({
                   sock: stream,
                   host: config.host,
-                  port: config.port,
+                  port: +config.port,
                   username: config.username,
                 }, "password" in config ? {
                   password: config.password
@@ -59,7 +59,7 @@ const ssh$ = (config: Config | Config2) =>
         })
         .connect(Object.assign({
           host: config.host,
-          port: config.port,
+          port: +config.port,
           username: config.username
         }, "password" in config ? {
           password: config.password
