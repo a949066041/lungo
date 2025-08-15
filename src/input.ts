@@ -49,4 +49,6 @@ inputNames.forEach((input) => {
   inputs[aliasNams[input as keyof typeof defaultInputs]] = validVal;
 })
 
+console.log(process.env)
+
 export { inputs }

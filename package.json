@@ -12,7 +12,7 @@
     "prepublish": "pnpm build"
   },
   "bin": {
-    "lungo": "./dist/bin.js"
+    "lungo": "./dist/index.js"
   },
   "keywords": [
     "cli"
