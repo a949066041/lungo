@@ -9,36 +9,15 @@
 import chalk from "chalk";
 import { Table } from "console-table-printer";
 import dayjs from "dayjs";
-import minimist from "minimist";
-import { existsSync, readFileSync } from "fs";
-import { resolve } from "path";
 import { concatMap, map, tap } from "rxjs";
 import { Client } from "ssh2";
+import { inputs } from './input';
 
 import { Config } from "./config/config.interface";
 import { sftp$ } from "./ftp";
 import { exec$, ssh$ } from "./ssh";
 
-const env = minimist(process.argv.slice(2)).env;
-
-if (!env) {
-  throw new Error("参数env不存在");
-}
-
-const filepath = resolve(process.cwd(), "lungo.config.json");
-if (!existsSync(filepath)) {
-  throw new Error("配置文件不存在,请创建lungo.config.json文件");
-}
-
-const config_file: Record<string, Config> = JSON.parse(
-  readFileSync(resolve(process.cwd(), "lungo.config.json")).toString()
-);
-if (!config_file[env]) {
-  throw new Error(`配置文件${env}不存在`);
-}
-const useConfg = config_file[env];
-
-const keyList = new Set(Object.keys(useConfg));
+const keyList = new Set(Object.keys(inputs));
 
 ["serverDir", "host", "port", "username", "project", "dist"].some(
   (item) => {
@@ -142,7 +121,7 @@ const bin$ = (config: Config) =>
     concatMap((command) => exec$(client as Client, command)),
     concatMap(() => exec$(client as Client, delCommand))
   );
-bin$(useConfg).subscribe((_res) => {
+bin$(inputs as Config).subscribe((_res) => {
   console.log(chalk.green("上传成功"));
   if (client) {
     client.end();
