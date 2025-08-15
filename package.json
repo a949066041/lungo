@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "pnpm rollup -c -w",
     "build": "pnpm rollup -c",
+    "build:action": "ncc build ./src/bin.ts -o dist -m",
     "ipublish": "pnpm publish --no-git-checks --registry https://registry.npmjs.org/ --access public",
     "prepublish": "pnpm build"
   },
@@ -40,6 +41,7 @@
   },
   "dependencies": {
     "@rollup/plugin-terser": "^0.4.4",
+    "@vercel/ncc": "^0.38.3",
     "ssh2": "^1.15.0",
     "zip-a-folder": "^3.1.9"
   }

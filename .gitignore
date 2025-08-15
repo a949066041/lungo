@@ -1,3 +1,4 @@
 folder-alias.json
 node_modules
 .pnpm-debug.log
+dist/pagent.exe
