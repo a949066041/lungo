@@ -13,7 +13,7 @@ import { concatMap, map, tap } from "rxjs";
 import { Client } from "ssh2";
 import { inputs } from './input';
 
-import { Config } from "./config/config.interface";
+import { Config, Config2 } from "./config/config.interface";
 import { sftp$ } from "./ftp";
 import { exec$, ssh$ } from "./ssh";
 
@@ -40,7 +40,7 @@ interface CommonFile {
 
 let client: Client | null = null;
 let delCommand = "echo no file delete";
-const bin$ = (config: Config) =>
+const bin$ = (config: Config | Config2) =>
   ssh$(config).pipe(
     tap((conn) => {
       client = conn;
@@ -121,7 +121,7 @@ const bin$ = (config: Config) =>
     concatMap((command) => exec$(client as Client, command)),
     concatMap(() => exec$(client as Client, delCommand))
   );
-bin$(inputs as Config).subscribe((_res) => {
+bin$(inputs).subscribe((_res) => {
   console.log(chalk.green("上传成功"));
   if (client) {
     client.end();

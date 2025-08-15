@@ -1,4 +1,4 @@
-import { Config2 } from "./config/config.interface";
+import { Config, Config2 } from "./config/config.interface";
 
 const inputNames = [
   "SSH_PRIVATE_KEY",
@@ -32,22 +32,21 @@ const aliasNams: Record<keyof typeof defaultInputs, keyof Config2> = {
   SERVER_DIR: 'serverDir',
 }
 
-const inputs = {
+const inputs: Config | Config2 = {
+  privateKey: '',
+  host: '',
+  username: '',
+  port: 22,
+  project: '',
+  dist: '',
+  serverDir: '',
 };
 
 inputNames.forEach((input) => {
   const inputVal = process.env[input]
+  const validVal: string = inputVal === undefined ? defaultInputs[input as keyof typeof defaultInputs] : inputVal
   // @ts-ignore
-  const validVal = inputVal === undefined ? defaultInputs[input] : inputVal
-  let extendedVal = validVal;
-  switch (input) {
-    case 'CLIENT_DIST':
-      // @ts-ignore
-      extendedVal = validVal.split(' ').map((src) => `${process.env.GITHUB_WORKSPACE}/${src}`);
-      break;
-  }
-  // @ts-ignore
-  inputs[aliasNams[input]] = validVal;
+  inputs[aliasNams[input as keyof typeof defaultInputs]] = validVal;
 })
 
 export { inputs }

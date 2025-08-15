@@ -1,11 +1,3 @@
-/*
- * @Author: Rikka
- * @Date: 2022-05-11 14:11:53
- * @LastEditTime: 2022-05-11 15:43:47
- * @LastEditors: Rikka
- * @Description:
- * @FilePath: \faw-operate-plateform-workspace\apps\tools\upload\src\zip.ts
- */
 import { join } from "path";
 import { zip } from 'zip-a-folder';
 
